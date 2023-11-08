@@ -17,6 +17,7 @@ const MainPage = () => {
           alignItems: "center",
         }}
       >
+        <h1>Konnect</h1>
         <Button
           fullWidth
           variant="contained"

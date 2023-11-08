@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 import { signInUser } from "../firebase/authService";
 import { TextField, Button, Box, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../firebase/firebaseConfig";
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSignIn = async (event) => {
     event.preventDefault();
     try {
-      const user = await signInUser(email, password);
-      props.setUser(user);
+      signInUser(email, password);
+      props.setUser(auth.currentUser.uid);
+      navigate("/events");
       // Sign-in successful
     } catch (error) {
       // Handle sign-in errors here
@@ -22,7 +26,7 @@ const Login = (props) => {
 
   return (
     <Box component="form" onSubmit={handleSignIn} noValidate sx={{ mt: 1 }}>
-      <Typography variant="h6">Sign In</Typography>
+      <Typography variant="h6">Log In</Typography>
       <TextField
         margin="normal"
         required
@@ -46,7 +50,7 @@ const Login = (props) => {
         onChange={(e) => setPassword(e.target.value)}
       />
       <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-        Sign In
+        Log In
       </Button>
     </Box>
   );

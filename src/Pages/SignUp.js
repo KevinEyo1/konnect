@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 import { createUser } from "../firebase/authService";
 import { TextField, Button, Box, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSignUp = async (event) => {
     event.preventDefault();
     try {
       const user = await createUser(email, password);
-      props.setUser(user);
+      props.setUser(user.user.uid);
+      // add to firestore
+      navigate("/events");
       // Sign-up successful
     } catch (error) {
       // Handle sign-up errors here
