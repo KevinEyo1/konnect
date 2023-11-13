@@ -1,7 +1,7 @@
 import React from "react";
 import LayoutWithSidebar from "../components/LayoutWithSidebar";
 
-const Trivia = () => {
+const Trivia = (props) => {
   return (
     <LayoutWithSidebar>
       <h1>Trivia Page</h1>

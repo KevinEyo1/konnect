@@ -1,7 +1,7 @@
 import React from "react";
 import LayoutWithSidebar from "../components/LayoutWithSidebar";
 
-const Events = () => {
+const Events = (props) => {
   return (
     <LayoutWithSidebar>
       <h1>Events Page</h1>
