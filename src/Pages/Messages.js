@@ -1,7 +1,7 @@
 import React from "react";
 import LayoutWithSidebar from "../components/LayoutWithSidebar";
 
-const Messages = () => {
+const Messages = (props) => {
   return (
     <LayoutWithSidebar>
       <h1>Messages Page</h1>

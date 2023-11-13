@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Drawer,
   List,
@@ -7,6 +7,7 @@ import {
   ListItemText,
   Box,
   ListItemButton,
+  Divider,
 } from "@mui/material";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import EventOutlinedIcon from "@mui/icons-material/EventOutlined";
@@ -20,7 +21,6 @@ const drawerWidth = 200;
 
 const LayoutWithSidebar = ({ children }) => {
   const navigate = useNavigate();
-  const [selectedPage, setSelectedPage] = React.useState("/events");
 
   const menuItems = [
     {
@@ -72,14 +72,16 @@ const LayoutWithSidebar = ({ children }) => {
       >
         <List>
           {menuItems.map((item) => (
-            <ListItemButton
-              key={item.text}
-              selected={selectedPage === item.path}
-              onClick={() => navigate(item.path)}
-            >
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.text} />
-            </ListItemButton>
+            <React.Fragment key={item.text}>
+              <ListItemButton
+                key={item.text}
+                onClick={() => navigate(item.path)}
+              >
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.text} />
+              </ListItemButton>
+              <Divider />
+            </React.Fragment>
           ))}
         </List>
       </Drawer>

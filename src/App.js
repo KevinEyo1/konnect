@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Login from "./Pages/Login";
 import SignUp from "./Pages/SignUp";
 import MainPage from "./Pages/MainPage";
@@ -9,20 +9,40 @@ import Profile from "./Pages/Profile";
 import Messages from "./Pages/Messages";
 import Trivia from "./Pages/Trivia";
 import Logout from "./Pages/Logout";
+import { auth } from "./firebase/firebaseConfig";
+import { onAuthStateChanged } from "firebase/auth";
 
 const App = () => {
   const [user, setUser] = React.useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log("User is signed in with uid:", user.uid);
+        setUser(user.uid);
+      } else {
+        // User is signed out
+        console.log("User is signed out");
+        // Handle signed out state or redirect to login page
+        setUser(null);
+      }
+    });
+
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<Login setUser={setUser} />} />
         <Route path="/signup" element={<SignUp setUser={setUser} />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/events" element={<Events />} />
-        <Route path="/explore" element={<Explore />} />
-        <Route path="/messages" element={<Messages />} />
-        <Route path="/trivia" element={<Trivia />} />
+        <Route path="/profile" element={<Profile user={user} />} />
+        <Route path="/events" element={<Events user={user} />} />
+        <Route path="/explore" element={<Explore user={user} />} />
+        <Route path="/messages" element={<Messages user={user} />} />
+        <Route path="/trivia" element={<Trivia user={user} />} />
         <Route path="/logout" element={<Logout setUser={setUser} />} />
       </Routes>
     </BrowserRouter>
