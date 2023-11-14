@@ -7,7 +7,10 @@ import Events from "./Pages/Events";
 import Explore from "./Pages/Explore";
 import Profile from "./Pages/Profile";
 import Messages from "./Pages/Messages";
-import Trivia from "./Pages/Trivia";
+import Trivia from "./Pages/Trivia/Trivia";
+import FoodQuiz from "./Pages/Trivia/FoodQuiz";
+import UniversityQuiz from "./Pages/Trivia/UniversityQuiz";
+import PalaceQuiz from "./Pages/Trivia/PalaceQuiz";
 import Logout from "./Pages/Logout";
 import { auth } from "./firebase/firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
@@ -42,7 +45,10 @@ const App = () => {
         <Route path="/events" element={<Events user={user} />} />
         <Route path="/explore" element={<Explore user={user} />} />
         <Route path="/messages" element={<Messages user={user} />} />
-        <Route path="/trivia" element={<Trivia user={user} />} />
+        <Route path="/trivia" element={<Trivia />} />
+        <Route path="/triviafood" element={<FoodQuiz />} />
+        <Route path="/triviauniversity" element={<UniversityQuiz />} />
+        <Route path="/triviapalace" element={<PalaceQuiz />} />
         <Route path="/logout" element={<Logout setUser={setUser} />} />
       </Routes>
     </BrowserRouter>
