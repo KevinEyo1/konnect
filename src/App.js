@@ -11,9 +11,13 @@ import Trivia from "./Pages/Trivia";
 import Logout from "./Pages/Logout";
 import { auth } from "./firebase/firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
+import YourEvents from "./Pages/YourEvents";
+import { Chat } from "@mui/icons-material";
+import Chatroom from "./Pages/Chatroom";
 
 const App = () => {
   const [user, setUser] = React.useState(null);
+  const [currentChat, setCurrentChat] = useState(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -40,8 +44,16 @@ const App = () => {
         <Route path="/signup" element={<SignUp setUser={setUser} />} />
         <Route path="/profile" element={<Profile user={user} />} />
         <Route path="/events" element={<Events user={user} />} />
+        <Route path="/yourevents" element={<YourEvents user={user} />} />
         <Route path="/explore" element={<Explore user={user} />} />
-        <Route path="/messages" element={<Messages user={user} />} />
+        <Route
+          path="/messages"
+          element={<Messages user={user} setCurrentChat={setCurrentChat} />}
+        />
+        <Route
+          path="/chatroom"
+          element={<Chatroom user={user} currentChat={currentChat} />}
+        />
         <Route path="/trivia" element={<Trivia user={user} />} />
         <Route path="/logout" element={<Logout setUser={setUser} />} />
       </Routes>
