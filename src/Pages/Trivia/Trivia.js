@@ -39,6 +39,12 @@ const Trivia = () => {
       margin-top: 4px;
     }
 
+    .question-count {
+      margin-top: 8px;
+      font-size: 14px;
+      color: #888;
+    }
+
     .rating {
       margin-right: 4px;
     }
@@ -99,6 +105,9 @@ const Trivia = () => {
             <div className="author">
               <span className="author-name">Dongwon</span>
             </div>
+            <div className="question-count">
+              <span>Questions: {4}</span>
+            </div>
           </QuizItem>
         </li>
         <li>
@@ -118,6 +127,9 @@ const Trivia = () => {
             <div className="author">
               <span className="author-name">Junyoung</span>
             </div>
+            <div className="question-count">
+              <span>Questions: {4}</span>
+            </div>
           </QuizItem>
         </li>
         <li>
@@ -136,6 +148,9 @@ const Trivia = () => {
             </div>
             <div className="author">
               <span className="author-name">Kevin</span>
+            </div>
+            <div className="question-count">
+              <span>Questions: {4}</span>
             </div>
           </QuizItem>
         </li>
