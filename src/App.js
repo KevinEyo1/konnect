@@ -16,9 +16,12 @@ import KpopQuiz from "./Pages/Trivia/KpopQuiz";
 import CommonPhraseQuiz from "./Pages/Trivia/CommonPhraseQuiz";
 import EtiquetteQuiz from "./Pages/Trivia/EtiquetteQuiz";
 import Logout from "./Pages/Logout";
+import Bibimbap from "./Pages/EventPage/bibimbap"
+import KoreanBath from "./Pages/EventPage/KoreanBath"
 import { auth } from "./firebase/firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
 import YourEvents from "./Pages/YourEvents";
+import Baseball from "./Pages/EventPage/Baseball"
 import { Chat } from "@mui/icons-material";
 import Chatroom from "./Pages/Chatroom";
 
@@ -70,6 +73,9 @@ const App = () => {
         <Route path="/triviakpop" element={<KpopQuiz />} />
         <Route path="/triviacommonphrase" element={<CommonPhraseQuiz />} />
         <Route path="/logout" element={<Logout setUser={setUser} />} />
+        <Route path ="/EventPagebibimbap" element ={<Bibimbap/>}/>
+        <Route path ="/EventPageKoreanBath" element ={<KoreanBath/>}/>
+        <Route path ="/EventPageBaseball" element ={<Baseball/>}/>
       </Routes>
     </BrowserRouter>
   );
