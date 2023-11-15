@@ -2,6 +2,15 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Code description
+
+Main JavaScript file is App.js where the Router is and all pages and their routes are stored at.
+
+LayoutWithSidebar.js in the component folder helps to allow user to navigate between the different pages and features of the application.
+
+Main feature implementations are as per the sidebar tabs, in the pages folder.
+
+
 ## Available Scripts
 
 In the project directory, you can run:
