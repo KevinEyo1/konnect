@@ -86,7 +86,7 @@ const Trivia = () => {
 
   return (
     <LayoutWithSidebar>
-      <h1>Trivia Page</h1>
+      <h1>Solve and Create Trivias to Share Your Knowledge About Korean, or KAIST Cultures!</h1>
       <QuizList>
         <li>
           <QuizItem onClick={() => navigateToQuiz("food")}>
@@ -112,8 +112,31 @@ const Trivia = () => {
         </li>
 
         <li>
+          <QuizItem>
+            <img src="/images/kaist.jpg" alt="KAIST Culture Quiz" />
+            <p className="quiz-title">KAIST Culture Trivia (Under Verification)</p>
+            <div className="quiz-info">
+              <Rating
+                className="rating"
+                name="read-only"
+                value={5}
+                precision={0.5}
+                readOnly
+              />
+              <span className="rating-text">(5/5)</span>
+            </div>
+            <div className="author">
+              <span className="author-name">Junyoung</span>
+            </div>
+            <div className="question-count">
+              <span>Questions: {4}</span>
+            </div>
+          </QuizItem>
+        </li>
+
+        <li>
           <QuizItem onClick={() => navigateToQuiz("university")}>
-            <img src="/images/kaist.jpg" alt="University Quiz" />
+            <img src="/images/yonsei.jpg" alt="University Quiz" />
             <p className="quiz-title">Korean University Trivia</p>
             <div className="quiz-info">
               <Rating

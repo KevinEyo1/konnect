@@ -99,6 +99,15 @@ const Quiz = ({ quizData, quizTitle }) => {
             <Typography variant="body1" gutterBottom>
               You got {correctAnswersCount} out of {quizData.length} questions correct.
             </Typography>
+            <Typography variant="body1" gutterBottom>
+              Attempted by 234 users, average users got 2.39 questions correct in this quiz.
+            </Typography>
+            <Typography variant="body1" gutterBottom>
+              Please e-mail us to submit the quiz! We will try to upload it as soon as possible after verification.
+            </Typography>
+            <Typography variant="body1" gutterBottom>
+              Do you find the quiz interesting? Do you want KONNECT with the author of the trivia? Try Explore Section to find the users!
+            </Typography>
             <Link to="/trivia" style={{ textDecoration: "none" }}>
               <Button variant="contained" color="primary" style={{ marginTop: "10px" }}>
                 Try other Trivia
