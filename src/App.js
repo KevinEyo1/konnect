@@ -54,10 +54,13 @@ const App = () => {
         <Route path="/yourevents" element={<YourEvents user={user} />} />
         <Route path="/explore" element={<Explore user={user} />} />
         <Route
+          path="/messages"
+          element={<Messages user={user} setCurrentChat={setCurrentChat} />}
+        />
+        <Route
           path="/chatroom"
           element={<Chatroom user={user} currentChat={currentChat} />}
         />
-        <Route path="/messages" element={<Messages user={user} />} />
         <Route path="/trivia" element={<Trivia />} />
         <Route path="/triviafood" element={<FoodQuiz />} />
         <Route path="/triviauniversity" element={<UniversityQuiz />} />
