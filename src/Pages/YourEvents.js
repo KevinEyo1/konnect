@@ -1,12 +1,11 @@
 import React from "react";
 import LayoutWithSidebar from "../components/LayoutWithSidebar";
 import { useNavigate } from "react-router";
-import styled from "styled-components"
-import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import EventItem from '../Pages/Events'
-
+import styled from "styled-components";
+import CssBaseline from "@mui/material/CssBaseline";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import EventItem from "../Pages/Events";
 
 const YourEvents = (props) => {
   const EventData = props;
@@ -16,43 +15,60 @@ const YourEvents = (props) => {
   const EventHost = EventData.host;
   const EventOccupancy = EventData.occupancy;
   const EventTitle = props.title;
-  const Eventlink = props.link
+  const Eventlink = props.link;
+
+  // useEffect(() => {
+  //   getEvents();
+  // }, []);
+
+  // const getEvents = async () => {
+  //   const list = [];
+  //   const querySnapshot = await getDocs(
+  //     collection(db, "users", user, "events")
+  //   );
+  //   querySnapshot.forEach((doc) => {
+  //     const data = doc.data();
+  //     data.id = doc.id;
+  //     list.push(data);
+  //   });
+  //   setEvents(list);
+  //   setLoading(false);
+  // };
 
   const navigate = useNavigate();
 
   const navigateToEvent = (EventPath) => {
     navigate(`/EventPage${EventPath}`);
   };
+
   return (
     <LayoutWithSidebar>
-       <li>
-          <Container maxWidth="50">
-            
-          <EventItem onClick={()=>navigateToEvent({Eventlink})}>
-          <Box
-        sx={{
-          backgroundColor: "skyblue",
-          height: '20vh', // 높이를 화면의 50%로 설정 혹은 다른 값으로 조절
-          width: '30%', // 가로 크기를 100%로 설정
-          backgroundImage: `url(${EventImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      />
+      <li>
+        <Container maxWidth="50">
+          <EventItem onClick={() => navigateToEvent({ Eventlink })}>
+            <Box
+              sx={{
+                backgroundColor: "skyblue",
+                height: "20vh", // 높이를 화면의 50%로 설정 혹은 다른 값으로 조절
+                width: "30%", // 가로 크기를 100%로 설정
+                backgroundImage: `url(${EventImage})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            />
             <p className="Event-title">{EventTitle}</p>
-            <div className = "Event-info">
-              <span className= "Host-name">{EventHost} </span>
-              </div>
+            <div className="Event-info">
+              <span className="Host-name">{EventHost} </span>
+            </div>
             <div className="Event-time">
               <span>{EventTime} </span>
             </div>
-            <div className = "Event-occupancy">
+            <div className="Event-occupancy">
               <span>{EventOccupancy}</span>
             </div>
-            </EventItem>
-            
-            </Container>
-        </li>
+          </EventItem>
+        </Container>
+      </li>
     </LayoutWithSidebar>
   );
 };
