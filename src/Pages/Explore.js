@@ -9,6 +9,7 @@ import {
   query,
   where,
   collection,
+  addDoc,
 } from "firebase/firestore";
 import { useState } from "react";
 import {
@@ -30,21 +31,21 @@ const Explore = (props) => {
   const [userToExchangeLanguages, setUserToExchangeLanguages] = useState([]);
 
   useEffect(() => {
-    console.log("----------------------------------");
     getCurrentUser().then(() => {
-      getOtherUsers().then(() => {
-        console.log("other users got", otherUsers);
-        filterOtherUsers();
-      });
+      getOtherUsers();
     });
-    console.log("user got", userInfo);
-  }, [props.pageToggle]);
+  }, []);
+
+  useEffect(() => {
+    if (otherUsers.length > 0) {
+      filterOtherUsers();
+    }
+  }, [otherUsers]);
 
   const getCurrentUser = async () => {
     const docRef = doc(db, "users", user);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
       setUserInfo(docSnap.data());
     } else {
       // doc.data() will be undefined in this case
@@ -57,7 +58,10 @@ const Explore = (props) => {
     const querySnapshot = await getDocs(collection(db, "users"));
     querySnapshot.forEach((doc) => {
       if (doc.id !== user) {
-        list.push(doc.data());
+        // add doc id to data and push to list
+        const data = doc.data();
+        data.uid = doc.id;
+        list.push(data);
       }
     });
     setOtherUsers(list);
@@ -69,32 +73,68 @@ const Explore = (props) => {
 
     otherUsers.forEach((user) => {
       if (
-        user.interests.some((interest) => userInfo.interests.includes(interest))
+        user.interests.some((interest) =>
+          userInfo.interests?.includes(interest)
+        )
       ) {
         interestList.push(user);
       }
       if (
         user.languages.some((language) =>
-          userInfo.wantedLanguages.includes(language)
+          userInfo.wantedLanguages?.includes(language)
         ) &&
         user.wantedLanguages.some((wantedLanguage) =>
-          userInfo.languages.includes(wantedLanguage)
+          userInfo.languages?.includes(wantedLanguage)
         )
       ) {
         languageList.push(user);
       }
     });
-    console.log("users with common interests:", interestList);
-    console.log("users to exchange languages with:", languageList);
+
     setUserWithCommonInterests(interestList);
     setUserToExchangeLanguages(languageList);
+  };
+
+  const handleConnect = (targetUser) => async () => {
+    const currentUserChatsRef = collection(db, "users", user, "chats");
+    const chatQuery = query(
+      currentUserChatsRef,
+      where("userId", "==", targetUser.uid)
+    );
+    const querySnapshot = await getDocs(chatQuery);
+
+    if (querySnapshot.empty) {
+      console.log("Chat does not exist");
+      // Chat does not exist, create a new one
+      const newChat = {
+        userId: targetUser.uid,
+        otherUsername: targetUser.username,
+        messages: [],
+        // any other chat details
+      };
+
+      // Add to current user's chats
+      await addDoc(currentUserChatsRef, newChat);
+      alert("Go to messages tab to start chatting!");
+
+      // // Also add to target user's chats
+      // const targetUserChatsRef = collection(db, "users", targetUser.uid, "chats");
+      // await addDoc(targetUserChatsRef, {
+      //   userId: user, // Assuming 'user' is the current user's uid
+      //   username: userInfo.username, // Assuming this is the current user's username
+      //   // any other details
+      // });
+    } else {
+      console.log("Chat already exists");
+      alert("You are already connected with this user!");
+    }
   };
 
   return (
     <LayoutWithSidebar>
       <Container>
         <Typography variant="h4" component="h2">
-          Explore Page
+          Explore
         </Typography>
 
         <Typography variant="h5" gutterBottom>
@@ -108,14 +148,16 @@ const Explore = (props) => {
                   primary={user.username}
                   secondary={`Interests: ${user.interests.join(", ")}`}
                 />
-                <Button variant="contained" color="primary">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleConnect(user)}
+                >
                   Connect
                 </Button>
               </ListItem>
             ))}
         </List>
-
-        <Divider variant="inset" component="li" />
 
         <Typography variant="h5" gutterBottom>
           Users to exchange languages with
@@ -130,7 +172,11 @@ const Explore = (props) => {
                     ", "
                   )} | Wants to learn: ${user.wantedLanguages.join(", ")}`}
                 />
-                <Button variant="contained" color="primary">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleConnect(user)}
+                >
                   Connect
                 </Button>
               </ListItem>

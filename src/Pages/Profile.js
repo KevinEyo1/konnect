@@ -97,8 +97,6 @@ const Profile = () => {
   return (
     <LayoutWithSidebar>
       <div>
-        <h1>Profile</h1>
-        {/* Rest of your home page content */}
         <div
           style={{
             display: "grid",

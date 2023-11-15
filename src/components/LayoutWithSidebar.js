@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import EventOutlinedIcon from "@mui/icons-material/EventOutlined";
+import EventAvailableOutlinedIcon from "@mui/icons-material/EventAvailableOutlined";
 import ExploreOutlinedIcon from "@mui/icons-material/ExploreOutlined";
 import MessageOutlinedIcon from "@mui/icons-material/MessageOutlined";
 import QuizOutlinedIcon from "@mui/icons-material/QuizOutlined";
@@ -32,6 +33,11 @@ const LayoutWithSidebar = ({ children }) => {
       text: "Events",
       icon: <EventOutlinedIcon color="primary" />,
       path: "/events",
+    },
+    {
+      text: "Your Events",
+      icon: <EventAvailableOutlinedIcon color="primary" />,
+      path: "/yourevents",
     },
     {
       text: "Explore",
