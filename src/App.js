@@ -11,6 +11,10 @@ import Trivia from "./Pages/Trivia/Trivia";
 import FoodQuiz from "./Pages/Trivia/FoodQuiz";
 import UniversityQuiz from "./Pages/Trivia/UniversityQuiz";
 import PalaceQuiz from "./Pages/Trivia/PalaceQuiz";
+import HolidayQuiz from "./Pages/Trivia/HolidayQuiz";
+import KpopQuiz from "./Pages/Trivia/KpopQuiz";
+import CommonPhraseQuiz from "./Pages/Trivia/CommonPhraseQuiz";
+import EtiquetteQuiz from "./Pages/Trivia/EtiquetteQuiz";
 import Logout from "./Pages/Logout";
 import { auth } from "./firebase/firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
@@ -49,6 +53,10 @@ const App = () => {
         <Route path="/triviafood" element={<FoodQuiz />} />
         <Route path="/triviauniversity" element={<UniversityQuiz />} />
         <Route path="/triviapalace" element={<PalaceQuiz />} />
+        <Route path="/triviaholiday" element={<HolidayQuiz />} />
+        <Route path="/triviaetiquette" element={<EtiquetteQuiz />} />
+        <Route path="/triviakpop" element={<KpopQuiz />} />
+        <Route path="/triviacommonphrase" element={<CommonPhraseQuiz />} />
         <Route path="/logout" element={<Logout setUser={setUser} />} />
       </Routes>
     </BrowserRouter>

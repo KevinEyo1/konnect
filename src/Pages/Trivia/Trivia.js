@@ -110,6 +110,7 @@ const Trivia = () => {
             </div>
           </QuizItem>
         </li>
+
         <li>
           <QuizItem onClick={() => navigateToQuiz("university")}>
             <img src="/images/kaist.jpg" alt="University Quiz" />
@@ -132,6 +133,7 @@ const Trivia = () => {
             </div>
           </QuizItem>
         </li>
+
         <li>
           <QuizItem onClick={() => navigateToQuiz("palace")}>
             <img src="/images/kyeongbok.jpg" alt="Palace Quiz" />
@@ -154,6 +156,99 @@ const Trivia = () => {
             </div>
           </QuizItem>
         </li>
+        
+        <li>
+          <QuizItem onClick={() => navigateToQuiz("holiday")}>
+            <img src="/images/seollal.jpg" alt="Holiday Quiz" />
+            <p className="quiz-title">Korean Holiday Trivia</p>
+            <div className="quiz-info">
+              <Rating
+                className="rating"
+                name="read-only"
+                value={5}
+                precision={0.5}
+                readOnly
+              />
+              <span className="rating-text">(5/5)</span>
+            </div>
+            <div className="author">
+              <span className="author-name">John</span>
+            </div>
+            <div className="question-count">
+              <span>Questions: {3}</span>
+            </div>
+          </QuizItem>
+        </li>
+
+        <li>
+          <QuizItem onClick={() => navigateToQuiz("commonphrase")}>
+            <img src="/images/hangeul.jpg" alt="Common Phrase Quiz" />
+            <p className="quiz-title">Korean Common Phrase Trivia</p>
+            <div className="quiz-info">
+              <Rating
+                className="rating"
+                name="read-only"
+                value={5}
+                precision={0.5}
+                readOnly
+              />
+              <span className="rating-text">(5/5)</span>
+            </div>
+            <div className="author">
+              <span className="author-name">James</span>
+            </div>
+            <div className="question-count">
+              <span>Questions: {3}</span>
+            </div>
+          </QuizItem>
+        </li>
+
+        <li>
+          <QuizItem onClick={() => navigateToQuiz("etiquette")}>
+            <img src="/images/familyeating.jpg" alt="Etiquette Quiz" />
+            <p className="quiz-title">Korean Etiquette Trivia</p>
+            <div className="quiz-info">
+              <Rating
+                className="rating"
+                name="read-only"
+                value={5}
+                precision={0.5}
+                readOnly
+              />
+              <span className="rating-text">(5/5)</span>
+            </div>
+            <div className="author">
+              <span className="author-name">Alex</span>
+            </div>
+            <div className="question-count">
+              <span>Questions: {3}</span>
+            </div>
+          </QuizItem>
+        </li>
+        
+        <li>
+          <QuizItem onClick={() => navigateToQuiz("kpop")}>
+            <img src="/images/blackpink.jpg" alt="kpop Quiz" />
+            <p className="quiz-title">K-Pop Trivia</p>
+            <div className="quiz-info">
+              <Rating
+                className="rating"
+                name="read-only"
+                value={5}
+                precision={0.5}
+                readOnly
+              />
+              <span className="rating-text">(5/5)</span>
+            </div>
+            <div className="author">
+              <span className="author-name">Yoojin</span>
+            </div>
+            <div className="question-count">
+              <span>Questions: {4}</span>
+            </div>
+          </QuizItem>
+        </li>
+
       </QuizList>
     </LayoutWithSidebar>
   );
