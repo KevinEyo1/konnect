@@ -13,6 +13,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../firebase/firebaseConfig";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const SignUp = (props) => {
   const [username, setUsername] = useState("");
@@ -24,11 +25,15 @@ const SignUp = (props) => {
   const handleSignUp = async (event) => {
     event.preventDefault();
     try {
-      createUser(email, password);
-      const user = auth.currentUser;
+      const userCred = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCred.user;
       props.setUser(user.uid);
-      // add to firestore
-
+      console.log(user);
+      console.log(user.uid);
       await setDoc(doc(db, "users", user.uid), {
         username: username,
         email: email,
@@ -37,11 +42,11 @@ const SignUp = (props) => {
         interests: [],
         languages: [],
         wantedLanguages: [],
+        events: [],
       });
 
       navigate("/events");
     } catch (error) {
-      // Handle sign-up errors here
       console.error("Error during the sign-up process", error);
     }
   };

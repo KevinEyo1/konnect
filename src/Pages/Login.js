@@ -15,9 +15,7 @@ const Login = (props) => {
       signInUser(email, password);
       props.setUser(auth.currentUser.uid);
       navigate("/events");
-      // Sign-in successful
     } catch (error) {
-      // Handle sign-in errors here
       console.error("Error during the sign-in process", error);
     }
   };

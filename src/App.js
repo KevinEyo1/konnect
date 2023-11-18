@@ -34,9 +34,7 @@ const App = () => {
         console.log("User is signed in with uid:", user.uid);
         setUser(user.uid);
       } else {
-        // User is signed out
         console.log("User is signed out");
-        // Handle signed out state or redirect to login page
         setUser(null);
       }
     });

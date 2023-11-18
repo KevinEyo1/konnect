@@ -31,6 +31,7 @@ const Profile = () => {
 
   const getCurrentUser = async () => {
     const docRef = doc(db, "users", user);
+    console.log(user);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       console.log("Document data:", docSnap.data());
@@ -47,7 +48,6 @@ const Profile = () => {
       setLanguage(docSnap.data().languages);
       setWantedLanguage(docSnap.data().wantedLanguages);
     } else {
-      // doc.data() will be undefined in this case
       console.log("No such document!");
     }
   };
@@ -58,7 +58,6 @@ const Profile = () => {
       interests: interest,
       languages: language,
       wantedLanguages: wantedLanguage,
-      // Other fields to update...
     });
     console.log("Profile updated!");
     alert("Profile updated!");
@@ -68,30 +67,21 @@ const Profile = () => {
     const {
       target: { value },
     } = event;
-    setInterest(
-      // On autofill we get a the stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
+    setInterest(typeof value === "string" ? value.split(",") : value);
   };
 
   const handleChangeLanguage = (event) => {
     const {
       target: { value },
     } = event;
-    setLanguage(
-      // On autofill we get a the stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
+    setLanguage(typeof value === "string" ? value.split(",") : value);
   };
 
   const handleChangeWantedLanguage = (event) => {
     const {
       target: { value },
     } = event;
-    setWantedLanguage(
-      // On autofill we get a the stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
+    setWantedLanguage(typeof value === "string" ? value.split(",") : value);
   };
 
   return (

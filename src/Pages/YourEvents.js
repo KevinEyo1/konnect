@@ -1,41 +1,34 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import LayoutWithSidebar from "../components/LayoutWithSidebar";
-import { useNavigate } from "react-router";
-import styled from "styled-components";
-import CssBaseline from "@mui/material/CssBaseline";
-import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
-import EventItem from "../Pages/Events";
+import { auth, db } from "../firebase/firebaseConfig";
+import { collection, doc, getDoc } from "firebase/firestore";
+import {
+  Card,
+  CardActionArea,
+  CardMedia,
+  CardContent,
+  Typography,
+  Grid,
+  Box,
+} from "@mui/material";
 
-const YourEvents = (props) => {
-  const EventData = props;
-  const EventImage = EventData.image;
-  const EventTime = EventData.time;
-  const EventDesciption = EventData.description;
-  const EventHost = EventData.host;
-  const EventOccupancy = EventData.occupancy;
-  const EventTitle = props.title;
-  const Eventlink = props.link;
-
-  // useEffect(() => {
-  //   getEvents();
-  // }, []);
-
-  // const getEvents = async () => {
-  //   const list = [];
-  //   const querySnapshot = await getDocs(
-  //     collection(db, "users", user, "events")
-  //   );
-  //   querySnapshot.forEach((doc) => {
-  //     const data = doc.data();
-  //     data.id = doc.id;
-  //     list.push(data);
-  //   });
-  //   setEvents(list);
-  //   setLoading(false);
-  // };
-
+const YourEvents = () => {
+  const [events, setEvents] = useState([]);
+  const user = auth.currentUser;
   const navigate = useNavigate();
+
+  useEffect(() => {
+    getEvents();
+  }, []);
+
+  const getEvents = async () => {
+    const list = [];
+    const querySnapshot = await getDoc(doc(db, "users", user.uid));
+    const eventsData = querySnapshot.data().events;
+    list.push(...eventsData);
+    setEvents(list);
+  };
 
   const navigateToEvent = (EventPath) => {
     navigate(`/EventPage${EventPath}`);
@@ -43,32 +36,56 @@ const YourEvents = (props) => {
 
   return (
     <LayoutWithSidebar>
-      <li>
-        <Container maxWidth="50">
-          <EventItem onClick={() => navigateToEvent({ Eventlink })}>
-            <Box
-              sx={{
-                backgroundColor: "skyblue",
-                height: "20vh", // 높이를 화면의 50%로 설정 혹은 다른 값으로 조절
-                width: "30%", // 가로 크기를 100%로 설정
-                backgroundImage: `url(${EventImage})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
-            />
-            <p className="Event-title">{EventTitle}</p>
-            <div className="Event-info">
-              <span className="Host-name">{EventHost} </span>
-            </div>
-            <div className="Event-time">
-              <span>{EventTime} </span>
-            </div>
-            <div className="Event-occupancy">
-              <span>{EventOccupancy}</span>
-            </div>
-          </EventItem>
-        </Container>
-      </li>
+      <Box sx={{ p: 3 }}>
+        <Typography variant="h4" gutterBottom>
+          Your Events
+        </Typography>
+        {events.length === 0 ? (
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            flexDirection="column"
+            mt={5}
+          >
+            <Typography>
+              Looks like you haven't joined any events yet. Check out the Events
+              tab to find something interesting!
+            </Typography>
+          </Box>
+        ) : (
+          <Grid container spacing={3}>
+            {events.map((event, index) => (
+              <Grid item xs={12} sm={6} md={4} key={index}>
+                <Card>
+                  <CardActionArea onClick={() => navigateToEvent(event.path)}>
+                    <CardMedia
+                      component="img"
+                      height="140"
+                      image={event.image}
+                      alt={event.title}
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="div">
+                        {event.title}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {event.host} {event.rating}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {event.time}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {event.occupancy}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        )}
+      </Box>
     </LayoutWithSidebar>
   );
 };

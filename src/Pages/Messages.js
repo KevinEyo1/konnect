@@ -57,6 +57,11 @@ const Messages = (props) => {
           <CircularProgress />
         ) : (
           <List>
+            {chats.length === 0 && (
+              <Typography variant="h6" align="center">
+                Connect with people in the explore tab!
+              </Typography>
+            )}
             {chats.length !== 0 &&
               chats.map((chat) => (
                 <ListItem

@@ -1,149 +1,90 @@
 import React from "react";
 import LayoutWithSidebar from "../components/LayoutWithSidebar";
-import { useNavigate } from "react-router";
-import styled from "styled-components";
-import CssBaseline from "@mui/material/CssBaseline";
-import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
+import { useNavigate } from "react-router-dom";
+import {
+  Card,
+  CardActionArea,
+  CardMedia,
+  CardContent,
+  Typography,
+  Grid,
+  Box,
+} from "@mui/material";
 
 const Events = () => {
   const navigate = useNavigate();
 
   const navigateToEvent = (EventPath) => {
-    navigate(`/EventPage${EventPath}`, { state: { isJoinableButton: true } });
+    navigate(`/EventPage${EventPath}`);
   };
-  const EventList = styled.ul`
-    list-style: none;
-    padding: 0;
-  `;
-  const EventItem = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: clearInterval;
-    cursor: PointerEvent;
-    padding: 10;
-    img {
-      width: 150px; /* Adjusted image size */
-      height: 150px; /* Adjusted image size */
-      object-fit: cover;
-      border-radius: 8px;
-    }
 
-    .Host-name {
-      font-size: 16px;
-      font-weight: bold;
-    }
-
-    .Event-info {
-      font-size: 16px;
-      font-weight: bold;
-    }
-    .Event-time {
-      font-size: 16px;
-      font-weight: bold;
-    }
-    .Event-occupancy {
-      font-size: 16px;
-      font-weight: bold;
-    }
-    .Event-title {
-      font-size: 24px;
-      font-weight: bold;
-    }
-    .space {
-      margin: 10px;
-    }
-  `;
+  const eventsData = [
+    {
+      path: "bibimbap",
+      title: "Bibimbap cooking",
+      host: "Hosted by Jun Yeong Hwang",
+      rating: "4.69 stars",
+      time: "17 Oct 17:00 - 17 Oct 19:00",
+      occupancy: "Current Occupancy 4/5",
+      image: "/images/bibimbap.jpg",
+    },
+    {
+      path: "KoreanBath",
+      title: "Visit a Korean BathHouse",
+      host: "Hosted by Kim Min Ju",
+      rating: "4.82 stars",
+      time: "26 Oct 12:00 - 26 Oct 24:00",
+      occupancy: "Current Occupancy 3/5",
+      image: "/images/koreanBath.jpg",
+    },
+    {
+      path: "Baseball",
+      title: "Go to see baseball in Daejeon",
+      host: "Hosted by Kevin",
+      rating: "4.51 stars",
+      time: "20 Nov 17:00 - 20 Nov 20:00",
+      occupancy: "Current Occupancy 2/5",
+      image: "/images/baseball.jpg",
+    },
+  ];
 
   return (
     <LayoutWithSidebar>
-      <EventList>
-        <h1>Events Page</h1>
-        <li>
-          <Container maxWidth="50">
-            <EventItem onClick={() => navigateToEvent("bibimbap")}>
-              <Box
-                sx={{
-                  backgroundColor: "skyblue",
-                  height: "20vh", // 높이를 화면의 50%로 설정 혹은 다른 값으로 조절
-                  width: "30%", // 가로 크기를 100%로 설정
-                  backgroundImage: `url(${"/images/bibimbap.jpg"})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-              />
-              <p className="Event-title">Bibimbap Cooking</p>
-              <div className="Event-info">
-                <span className="Host-name">
-                  Hosted by Jun Yeong Hwang 4.69{" "}
-                </span>
-              </div>
-              <div className="Event-time">
-                <span>17 Oct 17:00 - 17 Oct 19:00 </span>
-              </div>
-              <div className="Event-occupancy">
-                <span>Current Occupancy 4/5</span>
-              </div>
-            </EventItem>
-          </Container>
-        </li>
-
-        <li>
-          <div className="space"></div>
-          <Container maxWidth="50">
-            <EventItem onClick={() => navigateToEvent("KoreanBath")}>
-              <Box
-                sx={{
-                  backgroundColor: "skyblue",
-                  height: "20vh", // 높이를 화면의 50%로 설정 혹은 다른 값으로 조절
-                  width: "30%", // 가로 크기를 100%로 설정
-                  backgroundImage: `url(${"/images/koreanBath.jpg"})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-              />
-              <p className="Event-title">Visit a Korean BathHouse</p>
-              <div className="Event-info">
-                <span className="Host-name">Hosted by Kim Min Ju 4.82 </span>
-              </div>
-              <div className="Event-time">
-                <span>26 Oct 12:00 - 26 Oct 24:00 </span>
-              </div>
-              <div className="Event-occupancy">
-                <span>Current Occupancy 3/5</span>
-              </div>
-            </EventItem>
-          </Container>
-        </li>
-
-        <li>
-          <div className="space"> </div>
-          <Container maxWidth="50">
-            <EventItem onClick={() => navigateToEvent("Baseball")}>
-              <Box
-                sx={{
-                  backgroundColor: "skyblue",
-                  height: "20vh", // 높이를 화면의 50%로 설정 혹은 다른 값으로 조절
-                  width: "30%", // 가로 크기를 100%로 설정
-                  backgroundImage: `url(${"/images/baseball.jpg"})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-              />
-              <p className="Event-title">Go to see Baseball in Daejeon</p>
-              <div className="Event-info">
-                <span className="Host-name">Hosted by Kevin 4.51 </span>
-              </div>
-              <div className="Event-time">
-                <span>20 Nov 17:00 - 20 Nov 20:00 </span>
-              </div>
-              <div className="Event-occupancy">
-                <span>Current Occupancy 2/5</span>
-              </div>
-            </EventItem>
-          </Container>
-        </li>
-      </EventList>
+      <Box sx={{ p: 3 }}>
+        <Typography variant="h4" gutterBottom>
+          Events Page
+        </Typography>
+        <Grid container spacing={3}>
+          {eventsData.map((event, index) => (
+            <Grid item xs={12} sm={6} md={4} key={index}>
+              <Card>
+                <CardActionArea onClick={() => navigateToEvent(event.path)}>
+                  <CardMedia
+                    component="img"
+                    height="140"
+                    image={event.image}
+                    alt={event.title}
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      {event.title}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {event.host} {event.rating}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {event.time}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {event.occupancy}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
     </LayoutWithSidebar>
   );
 };

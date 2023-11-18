@@ -1,27 +1,63 @@
 import React from "react";
 import LayoutWithSidebar from "../../components/LayoutWithSidebar";
-import { Link } from "react-router-dom";
-import { Button, Typography, Box, Grid } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+  Button,
+  Grid,
+  Box,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../../firebase/firebaseConfig";
+import { auth, db } from "../../firebase/firebaseConfig";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { db } from "../../firebase/firebaseConfig";
 
 const Event = ({ EventData, EventTitle }) => {
-  const EventImage = EventData.image;
-  const EventTime = EventData.time;
-  const EventDesciption = EventData.description;
-  const EventHost = EventData.host;
-  const EventOccupancy = EventData.occupancy;
+  const EventImage = `/images/${EventData.image}`;
   const user = auth.currentUser;
-
   const navigate = useNavigate();
 
+  const eventsData = [
+    {
+      path: "bibimbap",
+      title: "Bibimbap cooking",
+      host: "Hosted by Jun Yeong Hwang",
+      rating: "4.69 stars",
+      time: "17 Oct 17:00 - 17 Oct 19:00",
+      occupancy: "Current Occupancy 4/5",
+      image: "/images/bibimbap.jpg",
+    },
+    {
+      path: "KoreanBath",
+      title: "Visit a Korean BathHouse",
+      host: "Hosted by Kim Min Ju",
+      rating: "4.82 stars",
+      time: "26 Oct 12:00 - 26 Oct 24:00",
+      occupancy: "Current Occupancy 3/5",
+      image: "/images/koreanBath.jpg",
+    },
+    {
+      path: "Baseball",
+      title: "Go to see baseball in Daejeon",
+      host: "Hosted by Kevin",
+      rating: "4.51 stars",
+      time: "20 Nov 17:00 - 20 Nov 20:00",
+      occupancy: "Current Occupancy 2/5",
+      image: "/images/baseball.jpg",
+    },
+  ];
+
   const handleJoinEvent = async (event, title) => {
-    const dataToStore = {
-      title: title,
-      eventData: event,
-    };
+    var dataToStore = {};
+    console.log(title);
+    if (title === "Bibimbap cooking") {
+      dataToStore = eventsData[0];
+    } else if (title === "Visit a Korean BathHouse") {
+      dataToStore = eventsData[1];
+    } else {
+      dataToStore = eventsData[2];
+    }
     const docRef = doc(db, "users", user.uid);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
@@ -41,41 +77,33 @@ const Event = ({ EventData, EventTitle }) => {
 
   return (
     <LayoutWithSidebar>
-      <div>
-        <div style={{ fontSize: "48px", fontWeight: "bolder" }}>
-          <span>{EventTitle}</span>
-        </div>
-        <Box
-          sx={{
-            backgroundColor: "skyblue",
-            height: "20vh", // 높이를 화면의 50%로 설정 혹은 다른 값으로 조절
-            width: "30%", // 가로 크기를 100%로 설정
-            backgroundImage: `url(${`/images/${EventImage}`})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
+      <Card sx={{ maxWidth: 800, m: 2 }}>
+        <CardMedia
+          component="img"
+          height="140"
+          image={EventImage}
+          alt={EventTitle}
         />
-        <div
-          className="EventText"
-          style={{ fontSize: "8px", whiteSpace: "pre-line" }}
-        >
-          <h1 style={{ fontWeight: "bold" }}>Date & Time:{EventTime}</h1>
-          <h1>{EventDesciption}</h1>
-          <h1>{EventHost}</h1>
-          <h1>{EventOccupancy}</h1>
-        </div>
-      </div>
-      <div>
-        <Box maxWidth="30%">
-          <Grid container spacing={2} alignItems="center">
-            {/* <Grid item xs={6}> */}
-            {/* <Link to="/chat">
-            <Button variant="contained" color="primary" fullWidth>
-              Message Host
-            </Button>
-          </Link> */}
-            {/* </Grid> */}
-            <Grid item xs={6}>
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            {EventTitle}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Date & Time: {EventData.time}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {EventData.description}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Host: {EventData.host}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Occupancy: {EventData.occupancy}
+          </Typography>
+        </CardContent>
+        <Box sx={{ p: 2 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
               <Button
                 variant="contained"
                 color="primary"
@@ -87,8 +115,9 @@ const Event = ({ EventData, EventTitle }) => {
             </Grid>
           </Grid>
         </Box>
-      </div>
+      </Card>
     </LayoutWithSidebar>
   );
 };
+
 export default Event;
