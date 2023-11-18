@@ -2,6 +2,26 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Code description
+
+Main JavaScript file is App.js where the Router is and all pages and their routes are stored at.
+
+LayoutWithSidebar.js in the component folder helps to allow user to navigate between the different pages and features of the application.
+
+Main feature implementations are as per the sidebar tabs, in the pages folder.
+
+Explore.js: Explore feature to explore new connections to users with common interests or languages to exchange with.
+
+
+Messages.js: To chat with new connections
+
+
+Events.js: To look for new cultural events hosted by locals to join.
+
+
+Trivia.js: To look for quizzes to do to learn about Korea.
+
+
 ## Available Scripts
 
 In the project directory, you can run:
